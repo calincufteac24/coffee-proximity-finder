@@ -17,7 +17,8 @@ module CoffeeProximityFinder
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    config.x.csv_source_url = Rails.application.credentials.csv_source_url || ENV["CSV_SOURCE_URL"]
+
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #

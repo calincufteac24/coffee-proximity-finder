@@ -29,3 +29,8 @@
 
 en:
   hello: "Hello world"
+  api:
+    errors:
+      invalid_coordinates:
+        title: "Invalid Coordinates"
+        detail: "Both 'x' (latitude: -90 to 90) and 'y' (longitude: -180 to 180) must be valid numbers."
