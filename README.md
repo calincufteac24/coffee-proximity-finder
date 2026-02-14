@@ -81,7 +81,7 @@ Every class does *one thing*. If a class had a LinkedIn bio, it would be one sen
 
 ### Data Integrity — Trust Nobody
 
-Validation happens at *three layers*, because data is like coffee — you filter it multiple times:
+Validation happens at *three layers*, because data is like coffee, you filter it multiple times:
 
 
 ```text
