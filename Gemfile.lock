@@ -148,6 +148,8 @@ GEM
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
     json (2.18.1)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     kamal (2.10.1)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -416,6 +418,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  jsonapi-serializer (~> 2.2)
   kamal
   pg (~> 1.1)
   propshaft
