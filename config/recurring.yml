@@ -21,4 +21,4 @@ production:
 development:
   coffee_shop_sync:
     class: CoffeeShopSyncJob
-    schedule: every 5 minutes
+    schedule: every 1 minutes
