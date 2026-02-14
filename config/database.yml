@@ -85,8 +85,9 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  primary:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
   # Unify Solid Cache, Solid Queue and Solid Cable to use the primary database
   # since Render Free Tier only provides one database.
   cache:
