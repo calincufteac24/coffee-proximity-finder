@@ -19,14 +19,14 @@ module Api
 
     def render_not_found(exception)
       render_jsonapi_errors(
-        [{ status: "404", title: "Not Found", detail: exception.message }],
+        [ { status: "404", title: "Not Found", detail: exception.message } ],
         status: :not_found
       )
     end
 
     def render_unprocessable(exception)
       render_jsonapi_errors(
-        [{ status: "422", title: "Unprocessable Entity", detail: exception.message }],
+        [ { status: "422", title: "Unprocessable Entity", detail: exception.message } ],
         status: :unprocessable_entity
       )
     end
