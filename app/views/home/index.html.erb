@@ -1,0 +1,141 @@
+<% content_for(:title, "Coffee Proximity Finder — Find Nearest Coffee Shops") %>
+
+<div class="min-h-screen flex flex-col" data-controller="finder">
+
+  <!-- Hero Section -->
+  <header class="pt-16 pb-8 px-4 text-center">
+    <div class="max-w-2xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-medium mb-6 tracking-wide">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+        REST API + Web Interface
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+        <span class="bg-gradient-to-r from-amber-200 via-amber-400 to-orange-400 bg-clip-text text-transparent">
+          Coffee Proximity
+        </span>
+        <br>
+        <span class="text-zinc-300">Finder</span>
+      </h1>
+
+      <p class="text-zinc-400 text-lg max-w-md mx-auto leading-relaxed">
+        Enter coordinates to find the <strong class="text-zinc-200">3 closest</strong> coffee shops with precise distance calculations.
+      </p>
+    </div>
+  </header>
+
+  <!-- Search Form -->
+  <section class="px-4 pb-8">
+    <form data-action="submit->finder#search" class="max-w-xl mx-auto">
+      <div class="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800/60 rounded-2xl p-6 shadow-2xl shadow-black/20">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+          <div>
+            <label for="latitude-input" class="block text-xs font-medium text-zinc-400 mb-2 tracking-wide uppercase">Latitude (x)</label>
+            <input
+              id="latitude-input"
+              type="text"
+              inputmode="decimal"
+              data-finder-target="latitude"
+              placeholder="47.6062"
+              class="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3 text-zinc-100 placeholder-zinc-600
+                     focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500/40
+                     transition-all duration-200"
+            >
+          </div>
+          <div>
+            <label for="longitude-input" class="block text-xs font-medium text-zinc-400 mb-2 tracking-wide uppercase">Longitude (y)</label>
+            <input
+              id="longitude-input"
+              type="text"
+              inputmode="decimal"
+              data-finder-target="longitude"
+              placeholder="-122.3321"
+              class="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3 text-zinc-100 placeholder-zinc-600
+                     focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500/40
+                     transition-all duration-200"
+            >
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button
+            id="search-button"
+            type="submit"
+            class="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400
+                   text-zinc-950 font-semibold py-3 px-6 rounded-xl
+                   transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/20
+                   active:scale-[0.98] cursor-pointer"
+          >
+            <span class="flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              Find Coffee Shops
+            </span>
+          </button>
+
+          <button
+            id="location-button"
+            type="button"
+            data-action="click->finder#useMyLocation"
+            class="sm:w-auto bg-zinc-800 hover:bg-zinc-700 border border-zinc-700/50 text-zinc-300
+                   font-medium py-3 px-5 rounded-xl transition-all duration-200
+                   active:scale-[0.98] cursor-pointer"
+          >
+            <span class="flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              Use My Location
+            </span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <!-- Error message -->
+  <div data-finder-target="error"
+       class="hidden max-w-xl mx-auto mb-6 px-4">
+    <div class="bg-red-500/10 border border-red-500/20 text-red-400 px-5 py-3 rounded-xl text-sm text-center"></div>
+  </div>
+
+  <!-- Loading -->
+  <div data-finder-target="loading" class="hidden max-w-xl mx-auto px-4 pb-8">
+    <div class="flex flex-col items-center gap-3 py-12">
+      <div class="w-8 h-8 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin"></div>
+      <p class="text-zinc-500 text-sm">Searching for nearby coffee shops...</p>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div data-finder-target="emptyState" class="hidden max-w-xl mx-auto px-4 pb-8 text-center">
+    <div class="py-12">
+      <div class="text-4xl mb-3">☕</div>
+      <p class="text-zinc-400">No coffee shops found. Try syncing the data first.</p>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <section class="px-4 pb-12 flex-1">
+    <div data-finder-target="results"
+         class="hidden max-w-xl mx-auto space-y-3">
+    </div>
+
+    <div data-finder-target="meta"
+         class="hidden max-w-xl mx-auto mt-6 pt-6 border-t border-zinc-800/50">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-800/50 py-6 px-4">
+    <div class="max-w-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-600">
+      <span>Coffee Proximity Finder — Rails 8 + Tailwind 4</span>
+      <a href="/api/v1/coffee_shops?x=47.6&y=-122.4" target="_blank"
+         class="text-amber-500/60 hover:text-amber-400 transition-colors">
+        View Raw API Response →
+      </a>
+    </div>
+  </footer>
+</div>

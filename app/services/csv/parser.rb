@@ -1,3 +1,4 @@
+require "csv"
 module Csv
   class Parser
     def initialize(csv_content:, logger: Rails.logger)
@@ -23,10 +24,10 @@ module Csv
       return nil if row.blank?
 
       columns = extract_columns(row)
-      return skip_csv_row(line_number, row) unless DataValidator.valid_structure?(columns)
+      return skip_csv_row(line_number, row) unless CsvRowValidator.valid_structure?(columns)
 
       entry = build_coffee_shop(columns)
-      return skip_csv_row(line_number, row) unless DataValidator.valid_data?(entry)
+      return skip_csv_row(line_number, row) unless CsvRowValidator.valid_data?(entry)
 
       entry
     end
@@ -34,13 +35,13 @@ module Csv
     def build_coffee_shop(columns)
       {
         name: columns[0],
-        latitude: DataValidator.to_decimal(columns[1]),
-        longitude: DataValidator.to_decimal(columns[2])
+        latitude: CoordinateValidator.to_decimal(columns[1]),
+        longitude: CoordinateValidator.to_decimal(columns[2])
       }
     end
 
     def extract_columns(row)
-      row.split(",").map(&:strip)
+      CSV.parse_line(row)&.map { |col| col&.strip.to_s } || []
     end
 
     def skip_csv_row(line_number, row)
