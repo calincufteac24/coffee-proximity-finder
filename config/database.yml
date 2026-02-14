@@ -85,20 +85,16 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    database: coffee_proximity_finder_production
-    username: coffee_proximity_finder
-    password: <%= ENV["COFFEE_PROXIMITY_FINDER_DATABASE_PASSWORD"] %>
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+  # Unify Solid Cache, Solid Queue and Solid Cable to use the primary database
+  # since Render Free Tier only provides one database.
   cache:
-    <<: *primary_production
-    database: coffee_proximity_finder_production_cache
-    migrations_paths: db/cache_migrate
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
   queue:
-    <<: *primary_production
-    database: coffee_proximity_finder_production_queue
-    migrations_paths: db/queue_migrate
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
   cable:
-    <<: *primary_production
-    database: coffee_proximity_finder_production_cable
-    migrations_paths: db/cable_migrate
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
