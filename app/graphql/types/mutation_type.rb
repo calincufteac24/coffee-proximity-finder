@@ -2,6 +2,10 @@
 
 module Types
   class MutationType < Types::BaseObject
-    # Mutations will be added in upcoming tasks
+    field :health, String, null: false, description: "API health check"
+
+    def health
+      "ok"
+    end
   end
 end

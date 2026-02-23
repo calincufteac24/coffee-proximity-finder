@@ -2,6 +2,10 @@
 
 module Types
   class QueryType < Types::BaseObject
-    # Fields will be added by resolvers in upcoming tasks
+    field :health, String, null: false, description: "API health check"
+
+    def health
+      "ok"
+    end
   end
 end
