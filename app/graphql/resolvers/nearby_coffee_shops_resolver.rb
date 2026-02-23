@@ -4,7 +4,7 @@ module Resolvers
   class NearbyCoffeeShopsResolver < Resolvers::BaseResolver
     description "Find coffee shops closest to the given coordinates"
 
-    type [Types::CoffeeShopResultType], null: false
+    type [ Types::CoffeeShopResultType ], null: false
 
     argument :latitude, Float, required: true, description: "Latitude of the search origin"
     argument :longitude, Float, required: true, description: "Longitude of the search origin"
