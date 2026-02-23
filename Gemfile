@@ -71,3 +71,7 @@ group :test do
 end
 
 gem "jsonapi-serializer", "~> 2.2"
+
+# GraphQL API [https://graphql-ruby.org/]
+gem "graphql"
+gem "graphiql-rails", group: :development
