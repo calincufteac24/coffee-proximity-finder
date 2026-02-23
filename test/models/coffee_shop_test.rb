@@ -118,4 +118,50 @@ class CoffeeShopTest < ActiveSupport::TestCase
 
     assert_not_equal id_a, id_b
   end
+
+  # Address validations
+
+  test "is valid with a blank address" do
+    @shop.address = ""
+    assert @shop.valid?
+  end
+
+  test "is valid with a nil address" do
+    @shop.address = nil
+    assert @shop.valid?
+  end
+
+  test "is invalid when address exceeds max length" do
+    @shop.address = "a" * (CoffeeShop::MAX_ADDRESS_LENGTH + 1)
+    assert_not @shop.valid?
+    assert_includes @shop.errors[:address], "is too long (maximum is #{CoffeeShop::MAX_ADDRESS_LENGTH} characters)"
+  end
+
+  test "is valid at address max length boundary" do
+    @shop.address = "a" * CoffeeShop::MAX_ADDRESS_LENGTH
+    assert @shop.valid?
+  end
+
+  # Schedule validations
+
+  test "is valid with a blank schedule" do
+    @shop.schedule = ""
+    assert @shop.valid?
+  end
+
+  test "is valid with a nil schedule" do
+    @shop.schedule = nil
+    assert @shop.valid?
+  end
+
+  test "is invalid when schedule exceeds max length" do
+    @shop.schedule = "a" * (CoffeeShop::MAX_SCHEDULE_LENGTH + 1)
+    assert_not @shop.valid?
+    assert_includes @shop.errors[:schedule], "is too long (maximum is #{CoffeeShop::MAX_SCHEDULE_LENGTH} characters)"
+  end
+
+  test "is valid at schedule max length boundary" do
+    @shop.schedule = "a" * CoffeeShop::MAX_SCHEDULE_LENGTH
+    assert @shop.valid?
+  end
 end
