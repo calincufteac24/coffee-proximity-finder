@@ -12,6 +12,7 @@ module Types
       field :address, String, description: "Street address"
       field :schedule, String, description: "Opening hours"
       field :distance, Float, null: false, description: "Distance from origin in km"
+      field :highlighted, Boolean, null: false, description: "Whether this shop is in the top 3 closest"
     end
   end
 end
