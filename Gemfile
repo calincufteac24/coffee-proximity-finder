@@ -73,5 +73,5 @@ end
 gem "jsonapi-serializer", "~> 2.2"
 
 # GraphQL API [https://graphql-ruby.org/]
-gem "graphql"
-gem "graphiql-rails", group: :development
+gem "graphql", "~> 2.5"
+gem "graphiql-rails", "~> 1.10", group: :development

@@ -425,8 +425,8 @@ DEPENDENCIES
   capybara
   csv
   debug
-  graphiql-rails
-  graphql
+  graphiql-rails (~> 1.10)
+  graphql (~> 2.5)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
