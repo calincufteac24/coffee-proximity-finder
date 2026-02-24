@@ -1,0 +1,13 @@
+type Mutation {
+  """
+  API health check
+  """
+  health: String!
+}
+
+type Query {
+  """
+  API health check
+  """
+  health: String!
+}
