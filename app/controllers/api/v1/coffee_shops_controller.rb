@@ -11,7 +11,7 @@ module Api
       private
 
       def find_closest_shops
-        CoffeeShops::Finder.new(latitude: params[:x], longitude: params[:y], limit: 3).call
+        CoffeeShops::Finder.new(latitude: params[:x], longitude: params[:y]).call
       end
 
       def serialize_results(results)
