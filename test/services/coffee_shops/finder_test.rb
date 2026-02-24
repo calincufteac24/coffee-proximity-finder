@@ -9,12 +9,12 @@ class CoffeeShops::FinderTest < ActiveSupport::TestCase
     @sf = coffee_shops(:starbucks_sf)
   end
 
-  test "returns the 3 closest shops sorted by distance" do
+  test "returns all shops sorted by distance" do
     results = CoffeeShops::Finder.new(latitude: "47.6", longitude: "-122.4").call
 
-    assert_equal 3, results.size
-    assert results[0].distance <= results[1].distance
-    assert results[1].distance <= results[2].distance
+    assert_equal CoffeeShop.count, results.size
+    distances = results.map(&:distance)
+    assert_equal distances.sort, distances
   end
 
   test "returns Result value objects" do
@@ -41,14 +41,8 @@ class CoffeeShops::FinderTest < ActiveSupport::TestCase
     assert_equal "Starbucks SF", furthest.name
   end
 
-  test "respects the limit parameter" do
-    results = CoffeeShops::Finder.new(latitude: "47.6", longitude: "-122.4", limit: 1).call
-
-    assert_equal 1, results.size
-  end
-
-  test "returns all shops when limit exceeds total count" do
-    results = CoffeeShops::Finder.new(latitude: "47.6", longitude: "-122.4", limit: 100).call
+  test "returns all shops in the database" do
+    results = CoffeeShops::Finder.new(latitude: "47.6", longitude: "-122.4").call
 
     assert_equal CoffeeShop.count, results.size
   end
@@ -65,8 +59,7 @@ class CoffeeShops::FinderTest < ActiveSupport::TestCase
     shop = @seattle
     results = CoffeeShops::Finder.new(
       latitude: shop.latitude.to_s,
-      longitude: shop.longitude.to_s,
-      limit: 1
+      longitude: shop.longitude.to_s
     ).call
 
     assert_in_delta 0.0, results.first.distance.to_f, 0.001
