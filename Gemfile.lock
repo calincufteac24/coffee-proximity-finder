@@ -180,6 +180,9 @@ GEM
     mini_mime (1.1.5)
     minitest (6.0.1)
       prism (~> 1.5)
+    minitest-spec-rails (7.4.1)
+      minitest (>= 5.0)
+      railties (>= 4.1)
     msgpack (1.8.0)
     net-imap (0.6.2)
       date
@@ -420,6 +423,7 @@ DEPENDENCIES
   jbuilder
   jsonapi-serializer (~> 2.2)
   kamal
+  minitest-spec-rails
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
