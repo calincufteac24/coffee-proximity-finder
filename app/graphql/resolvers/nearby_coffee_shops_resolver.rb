@@ -4,7 +4,7 @@ module Resolvers
   class NearbyCoffeeShopsResolver < Resolvers::BaseResolver
     description "Find coffee shops closest to the given coordinates"
 
-    type [ Types::CoffeeShopResultType ], null: false
+    type [ Types::CoffeeShops::CoffeeShop ], null: false
 
     argument :latitude, Float, required: true, description: "Latitude of the search origin"
     argument :longitude, Float, required: true, description: "Longitude of the search origin"
@@ -12,7 +12,7 @@ module Resolvers
     def resolve(latitude:, longitude:)
       validate_coordinates!(latitude, longitude)
 
-      CoffeeShops::Finder.new(latitude: latitude, longitude: longitude).call
+      CoffeeShops::Finder.new(latitude: latitude, longitude: longitude).call.map(&:coffee_shop)
     end
 
     private
