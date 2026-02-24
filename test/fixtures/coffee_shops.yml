@@ -3,15 +3,21 @@ starbucks_seattle:
   latitude: 47.5809
   longitude: -122.3160
   external_id: <%= Digest::SHA256.hexdigest("Starbucks Seattle|47.5809|-122.316") %>
+  address: "123 Main Street, Downtown, Seattle"
+  schedule: "Mon-Fri: 6:00-22:00, Sat-Sun: 7:00-21:00"
 
 starbucks_sf:
   name: "Starbucks SF"
   latitude: 37.5209
   longitude: -122.3340
   external_id: <%= Digest::SHA256.hexdigest("Starbucks SF|37.5209|-122.334") %>
+  address: "456 Market Street, SoMa, San Francisco"
+  schedule: "Mon-Sun: 7:00-20:00"
 
 starbucks_seattle2:
   name: "Starbucks Seattle2"
   latitude: 47.5869
   longitude: -122.3368
   external_id: <%= Digest::SHA256.hexdigest("Starbucks Seattle2|47.5869|-122.3368") %>
+  address: "789 Pike Place, Waterfront, Seattle"
+  schedule: "Mon-Fri: 5:30-18:00"

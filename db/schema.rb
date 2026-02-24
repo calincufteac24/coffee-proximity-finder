@@ -10,16 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_14_195618) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_23_152300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "coffee_shops", force: :cascade do |t|
+    t.string "address"
     t.datetime "created_at", null: false
     t.string "external_id", null: false
     t.decimal "latitude", precision: 10, scale: 6, null: false
     t.decimal "longitude", precision: 10, scale: 6, null: false
     t.string "name", null: false
+    t.string "schedule"
     t.datetime "updated_at", null: false
     t.index ["external_id"], name: "index_coffee_shops_on_external_id", unique: true
     t.index ["latitude", "longitude"], name: "index_coffee_shops_on_latitude_and_longitude"
