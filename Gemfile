@@ -68,6 +68,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "minitest-spec-rails"
+  gem "factory_bot_rails"
 end
 
 gem "jsonapi-serializer", "~> 2.2"
