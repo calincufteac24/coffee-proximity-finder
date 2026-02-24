@@ -2,10 +2,6 @@
 
 module Types
   class QueryType < Types::BaseObject
-    field :health, String, null: false, description: "API health check"
-
-    def health
-      "ok"
-    end
+    field :nearby_coffee_shops, resolver: Resolvers::NearbyCoffeeShopsResolver
   end
 end
