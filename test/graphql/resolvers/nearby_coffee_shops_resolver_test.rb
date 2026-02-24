@@ -18,6 +18,17 @@ describe "NearbyCoffeeShopsResolver" do
     }
   GQL
 
+  QUERY_WITH_NAME = <<~GQL
+    query($latitude: Float!, $longitude: Float!, $name: String) {
+      nearbyCoffeeShops(latitude: $latitude, longitude: $longitude, name: $name) {
+        id
+        name
+        distance
+        highlighted
+      }
+    }
+  GQL
+
   let(:origin) { { latitude: 47.6062, longitude: -122.3321 } }
 
   before do
@@ -62,6 +73,48 @@ describe "NearbyCoffeeShopsResolver" do
     end
   end
 
+  describe "with name filter" do
+    it "returns only matching shops" do
+      shops = fetch_shops_by_name("Closest")
+
+      assert_equal 1, shops.length
+      assert_equal "Closest Shop", shops.first["name"]
+    end
+
+    it "is case insensitive" do
+      shops = fetch_shops_by_name("closest")
+
+      assert_equal 1, shops.length
+      assert_equal "Closest Shop", shops.first["name"]
+    end
+
+    it "matches partial names" do
+      shops = fetch_shops_by_name("Shop")
+
+      shops.each { |shop| assert_match(/Shop/i, shop["name"]) }
+    end
+
+    it "returns empty array when no match" do
+      shops = fetch_shops_by_name("Nonexistent")
+
+      assert_empty shops
+    end
+
+    it "returns all shops when name is not provided" do
+      shops = fetch_shops
+
+      assert_equal CoffeeShop.count, shops.length
+    end
+
+    it "is safe from SQL injection" do
+      count_before = CoffeeShop.count
+      shops = fetch_shops_by_name("'; DROP TABLE coffee_shops; --")
+
+      assert_empty shops
+      assert_equal count_before, CoffeeShop.count
+    end
+  end
+
   describe "with invalid coordinates" do
     it "returns error for invalid latitude" do
       result = execute_query(latitude: 91.0, longitude: 0.0)
@@ -90,6 +143,14 @@ describe "NearbyCoffeeShopsResolver" do
 
   def fetch_shops
     result = execute_query
+    result.dig("data", "nearbyCoffeeShops")
+  end
+
+  def fetch_shops_by_name(name)
+    result = CoffeeProximityFinderSchema.execute(
+      QUERY_WITH_NAME,
+      variables: { latitude: origin[:latitude], longitude: origin[:longitude], name: name }
+    ).to_h
     result.dig("data", "nearbyCoffeeShops")
   end
 end
