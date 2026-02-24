@@ -79,6 +79,20 @@ describe CoffeeShop do
     end
   end
 
+  describe "address" do
+    it "is valid when blank" do
+      @shop.address = nil
+      assert @shop.valid?
+    end
+  end
+
+  describe "schedule" do
+    it "is valid when blank" do
+      @shop.schedule = nil
+      assert @shop.valid?
+    end
+  end
+
   describe "external_id" do
     it "rejects duplicates" do
       duplicate = CoffeeShop.new(
